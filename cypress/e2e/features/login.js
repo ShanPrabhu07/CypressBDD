@@ -10,5 +10,5 @@ When('I enter valid username and password', () => {
 
 
 Then('I should see the dashboard', () => {
-  cy.log("success")
+  cy.log("edited cide")
 });
