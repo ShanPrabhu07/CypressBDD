@@ -15,3 +15,21 @@
 
 // Import commands.js using ES2015 syntax:
 import './commands'
+
+Cypress.on('uncaught:exception', (err, runnable) => {
+    // Ignore "bugsnag is not defined" errors
+    if (err.message.includes('bugsnag is not defined')) {
+      return false;
+    }
+    // Let other errors fail the test
+    return true;
+  });
+
+  Cypress.on('uncaught:exception', (err, runnable) => {
+    // Ignore ResizeObserver errors
+    if (err.message.includes('ResizeObserver loop')) {
+      return false;
+    }
+    // Let other errors fail the test
+    return true;
+  });

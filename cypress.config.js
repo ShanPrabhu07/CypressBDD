@@ -17,6 +17,7 @@ module.exports = defineConfig({
       return config;
     },
     specPattern: '**/*.feature',
-    stepDefinitions: '**/*.{js,ts}'
+    stepDefinitions: '**/*.{js,ts}',
+    experimentalModifyObstructiveThirdPartyCode: true,
   },
 });
