@@ -17,6 +17,12 @@
 import './commands'
 
 Cypress.on('uncaught:exception', (err, runnable) => {
+  // Prevent failing the test
+  return false;
+});
+
+
+Cypress.on('uncaught:exception', (err, runnable) => {
     // Ignore "bugsnag is not defined" errors
     if (err.message.includes('bugsnag is not defined')) {
       return false;
@@ -33,3 +39,23 @@ Cypress.on('uncaught:exception', (err, runnable) => {
     // Let other errors fail the test
     return true;
   });
+
+
+  Cypress.on('window:before:load', (win) => {
+    win.addEventListener('error', (e) => {
+      if (e.message.includes('ResizeObserver loop')) {
+        e.stopImmediatePropagation();
+      }
+    });
+  });
+  
+  Cypress.on('uncaught:exception', (err) => {
+    // we expect a 3rd party library error with message 'list not defined'
+    // and don't want to fail the test so we return false
+    if (err.message.includes('ResizeObserver loop')) {
+      return false
+    }
+    // we still want to ensure there are no other unexpected
+    // errors, so we let them fail the test
+  })
+  

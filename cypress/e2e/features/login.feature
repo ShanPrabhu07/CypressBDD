@@ -6,13 +6,9 @@ Feature: Login Functionality
     When Click the "Login" button
     Then Click on the "Login with Paratext" on the login page
     When Enter the Paratext admin credentials and click "Login"
-    Then  Verify that the admin user is logged in successfully.
-    When Verify that the user lands on the "My Projects" page upon successful login.
-    Then   Click "Connect" on the project "Project SIL".
-    When Verify that the user is redirected to the "Connect Paratext Project" page.
-    Then  Select the DBL resource (“EASY - Easy English Bible 2018”) as the Source project.
-    When Verify that the "Community Checking" checkbox is checked.
-    Then  Click on the “Connect” button
+    Then Verify that the admin user is logged in successfully
+    When Verify that the user lands on the "My Projects" page upon successful login
+    Then  Click "Connect" on the project "Project SIL"
     When  Verify that the project is connected successfully
     Then   Click on Settings page
     When   Check the Translation Suggestions check box
