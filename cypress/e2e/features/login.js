@@ -21,6 +21,7 @@ Then('Click on the "Login with Paratext" on the login page', () => {
 When('Enter the Paratext admin credentials and click "Login"', () => {
 
   cy.origin("https://registry.paratext.org", () => {
+    cy.wait(5000)
     cy.get("#email").clear()
     cy.get("#email").type("shanmuga.k@ecgroup-intl.com")
     cy.get('button[type="submit"]').first().click()
@@ -77,19 +78,19 @@ When ('Verify that the project is connected successfully',()=>{
 Then ('Click on Settings page',()=>{
 
   cy.contains("settings").click()
-  cy.wait(4000)
+  cy.wait(8000)
 })
 
 When ('Check the Translation Suggestions check box',()=>{
 
   cy.get(".mat-mdc-form-field").should('be.visible')
 
-  cy.get('.checkbox-translation-suggestions').check()
+  cy.get('#checkbox-translation-suggestions-input').check()
 })
 
 Then ('Verify that the Translation suggestions enable for the project',()=>{
 
-  cy.get('.checkbox-translation-suggestions').should('be.checked')
+  cy.get('#checkbox-translation-suggestions-input').should('be.checked')
 })
 
 When ('Click on the Questions & Answers',()=>{
@@ -99,7 +100,7 @@ When ('Click on the Questions & Answers',()=>{
 
 Then ('Click on “Add Questions” button',()=>{
 
-  cy.get(".add-question-button").click()
+  cy.get(".add-question-button").eq(0).click()
 })
 
 When ('Select the book “Ruth”, chapter 1, and 4th verse from the drop-down',()=>{
@@ -120,7 +121,7 @@ When('Click on the Save button',()=>{
 Then ('Add 2 more questions (“Question 2 and Question 3”) on the same book, same chapter and same verse (i.e. RUT 1:4)',()=>{
 
   for( let i = 1;i<=2;i++){
-    cy.get(".add-question-button").click()
+    cy.get(".add-question-button").eq(1).click()
     cy.get("#mat-input-1").type("2KI 1:2")
     cy.get("#textarea").type("Question"+i+1)
     cy.contains("Save").click()
