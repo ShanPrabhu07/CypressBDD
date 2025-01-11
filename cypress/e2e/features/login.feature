@@ -16,10 +16,10 @@ Feature: Login Functionality
     When    Click on the Questions & Answers
     Then    Click on “Add Questions” button
     When   Select the book “Ruth”, chapter 1, and 4th verse from the drop-down
-    Then   Add a text question (“Question 1”)
+    Then   Add a text question Question 1
     When  Click on the Save button
-    Then   Add 2 more questions (“Question 2 and Question 3”) on the same book, same chapter and same verse (i.e. RUT 1:4)
-    When  Verify that the 3 sets of questions are sorted in the canonical order (based on the order of creation)
+    Then  Add two more questions on the same book, same chapter and same verse
+    When  Verify that the 3 sets of questions are sorted in the canonical order
     Then   Click on the Add Questions button
     When   Verify that the Add questions dialog appears
     Then   Add a question (“Question 4”) on the 5th verse of the book “Ruth” (i.e. RUT 1:5)
