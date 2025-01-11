@@ -105,10 +105,11 @@ Then ('Click on “Add Questions” button',()=>{
 
 When ('Select the book “Ruth”, chapter 1, and 4th verse from the drop-down',()=>{
 
+  cy.get("#mat-input-1").clear()
   cy.get("#mat-input-1").type("2KI 1:2")
 })
 
-Then('Add a text question (“Question 1”)',()=>{
+Then('Add a text question Question 1',()=>{
 
   cy.get("#textarea").type("Question 1")
 })
@@ -118,13 +119,21 @@ When('Click on the Save button',()=>{
   cy.contains("Save").click()
 })
 
-Then ('Add 2 more questions (“Question 2 and Question 3”) on the same book, same chapter and same verse (i.e. RUT 1:4)',()=>{
+Then ('Add two more questions on the same book, same chapter and same verse',()=>{
 
   for( let i = 1;i<=2;i++){
-    cy.get(".add-question-button").eq(1).click()
-    cy.get("#mat-input-1").type("2KI 1:2")
-    cy.get("#textarea").type("Question"+i+1)
+    cy.get(".add-question-button").eq(0).click()
+    cy.wait(2000)
+    cy.get('.mat-mdc-input-element').first().clear()
+    cy.get('.mat-mdc-input-element').first().type("2KI 1:2")
+    cy.get("#textarea").type("Question"+(i+1))
     cy.contains("Save").click()
   }
 
+})
+
+When('Verify that the 3 sets of questions are sorted in the canonical order',()=>{
+
+  cy.get(".mat-mdc-list").children("mat-list-item").should("have.length",3).
+  eq(0).children(".question-text").should("have.text","Question 1")
 })
