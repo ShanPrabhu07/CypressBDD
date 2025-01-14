@@ -77,7 +77,7 @@ When ('Verify that the project is connected successfully',()=>{
 
 Then ('Click on Settings page',()=>{
 
-  cy.contains("settings").click()
+  cy.contains("settings").click({force:true})
   cy.wait(8000)
 })
 
@@ -106,7 +106,7 @@ Then ('Click on “Add Questions” button',()=>{
 When ('Select the book “Ruth”, chapter 1, and 4th verse from the drop-down',()=>{
 
   cy.get("#mat-input-1").clear()
-  cy.get("#mat-input-1").type("2KI 1:2")
+  cy.get("#mat-input-1").type("2KI 1:4")
 })
 
 Then('Add a text question Question 1',()=>{
@@ -125,8 +125,8 @@ Then ('Add two more questions on the same book, same chapter and same verse',()=
     cy.get(".add-question-button").eq(0).click()
     cy.wait(2000)
     cy.get('.mat-mdc-input-element').first().clear()
-    cy.get('.mat-mdc-input-element').first().type("2KI 1:2")
-    cy.get("#textarea").type("Question"+(i+1))
+    cy.get('.mat-mdc-input-element').first().type("2KI 1:4")
+    cy.get("#textarea").type("Question "+(i+1))
     cy.contains("Save").click()
   }
 
@@ -135,5 +135,53 @@ Then ('Add two more questions on the same book, same chapter and same verse',()=
 When('Verify that the 3 sets of questions are sorted in the canonical order',()=>{
 
   cy.get(".mat-mdc-list").children("mat-list-item").should("have.length",3).
-  eq(0).children(".question-text").should("have.text","Question 1")
+  eq(0).should("have.text","Question 12 Kings 1:4")
+  cy.get(".mat-mdc-list").children("mat-list-item").should("have.length",3).
+  eq(1).should("have.text","Question 22 Kings 1:4")
+  cy.get(".mat-mdc-list").children("mat-list-item").should("have.length",3).
+  eq(2).should("have.text","Question 32 Kings 1:4")
+})
+
+Then('Click on the Add Questions button again',()=>{
+
+  cy.get(".add-question-button").eq(0).click()
+})
+
+When('Verify that the Add questions dialog appears',()=>{
+
+  cy.get(id^='mat-mdc-dialog-title').should('have.text',' New Question ')
+})
+
+Then('Add a Question 4 on the 5th verse of the book Ruth',()=>{
+
+  cy.get("#mat-input-1").clear()
+  cy.get("#mat-input-1").type("2KI 1:5")
+  cy.get("#textarea").type("Question 5")
+  cy.contains("Save").click()
+})
+
+When('Verify that the added question appears below the previous questions in the canonical order',()=>{
+
+  cy.get(".mat-mdc-list").children("mat-list-item").should("have.length",4).
+  eq(3).should("have.text","Question 52 Kings 1:5")
+})
+
+Then('Click on the Add Questions button for final question',()=>{
+
+  cy.get(".add-question-button").eq(0).click()
+
+})
+
+When('Add a text Question 5 on the 4th verse',()=>{
+
+  cy.get("#mat-input-1").clear()
+  cy.get("#mat-input-1").type("2KI 1:4")
+  cy.get("#textarea").type("Question 5")
+  cy.contains("Save").click()
+
+}) 
+
+Then('Verify that the newly created question is added before the previously created question and appeared below the three questions on the same verse',()=>{
+  var previous=cy.get(".mat-mdc-list").children("mat-list-item").eq(3)
+  cy.get(".mat-mdc-list").children("mat-list-item").eq(4).prev(previous).should('exist')
 })
