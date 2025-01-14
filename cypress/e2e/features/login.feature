@@ -20,11 +20,11 @@ Feature: Login Functionality
     When  Click on the Save button
     Then  Add two more questions on the same book, same chapter and same verse
     When  Verify that the 3 sets of questions are sorted in the canonical order
-    Then   Click on the Add Questions button
+    Then   Click on the Add Questions button again
     When   Verify that the Add questions dialog appears
-    Then   Add a question (“Question 4”) on the 5th verse of the book “Ruth” (i.e. RUT 1:5)
-    When Verify that the added question appears below the previous questions in the canonical order (i.e. at the bottom of list)
-    Then  Click on the Add Questions button
-    When  Add a text question (“Question 5”) on the 4th verse (i.e. RUT 1:4)
-    Then  Verify that the newly created question is added before the previously created question (i.e. last but one) and appeared below the three questions on the same verse
+    Then   Add a Question 4 on the 5th verse of the book Ruth
+    When Verify that the added question appears below the previous questions in the canonical order
+    Then  Click on the Add Questions button for final question
+    When  Add a text Question 5 on the 4th verse 
+    Then  Verify that the newly created question is added before the previously created question and appeared below the three questions on the same verse
 
