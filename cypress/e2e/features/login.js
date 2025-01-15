@@ -1,11 +1,18 @@
 import { Given, When, Then } from "@badeball/cypress-cucumber-preprocessor";
+import loginElements from "../../pageObject/loginelements";
+
+
 
 Given('Open the browser and navigate to qa.scriptureforge.org', () => {
-  cy.visit('qa.scriptureforge.org');
+  //cy.visit('qa.scriptureforge.org');
+  cy.visit(Cypress.env('url'));
+  
 });
 
 When('Click the "Login" button', () => {
-  cy.contains("Log In").click()
+  //cy.contains("Log In").click()
+  const loginObj = new loginElements()
+  loginObj.loginBtnClick()
 });
 
 
@@ -13,7 +20,11 @@ Then('Click on the "Login with Paratext" on the login page', () => {
 
 
   cy.origin("https://dev-sillsdev.auth0.com", () => {
+    // const originElements=Cypress.require("../pageObject/originElements")
+    // const originObj = new originElements();
+    // originObj.loginWithParatextBtnClick()
     cy.contains("Log in with paratext").click()
+   
   });
 
 });
@@ -149,13 +160,15 @@ Then('Click on the Add Questions button again',()=>{
 
 When('Verify that the Add questions dialog appears',()=>{
 
-  cy.get(id^='mat-mdc-dialog-title').should('have.text',' New Question ')
+  cy.get(".mat-mdc-dialog-title").find("mat-icon").should('have.text','live_help')
 })
 
 Then('Add a Question 4 on the 5th verse of the book Ruth',()=>{
 
-  cy.get("#mat-input-1").clear()
-  cy.get("#mat-input-1").type("2KI 1:5")
+  cy.get(".mat-mdc-input-element").eq(0).should('be.visible') 
+  cy.wait(3000)
+  cy.get(".mat-mdc-input-element").eq(0).clear({force:true})
+  cy.get(".mat-mdc-input-element").eq(0).type("2KI 1:5")
   cy.get("#textarea").type("Question 5")
   cy.contains("Save").click()
 })
@@ -174,8 +187,10 @@ Then('Click on the Add Questions button for final question',()=>{
 
 When('Add a text Question 5 on the 4th verse',()=>{
 
-  cy.get("#mat-input-1").clear()
-  cy.get("#mat-input-1").type("2KI 1:4")
+  cy.get(".mat-mdc-input-element").eq(0).should('be.visible') 
+  cy.wait(3000)
+  cy.get(".mat-mdc-input-element").eq(0).clear({force:true})
+  cy.get(".mat-mdc-input-element").eq(0).type("2KI 1:4")
   cy.get("#textarea").type("Question 5")
   cy.contains("Save").click()
 
