@@ -22,5 +22,6 @@ module.exports = defineConfig({
     specPattern: '**/*.feature',
     stepDefinitions: '**/*.{js,ts}',
     experimentalModifyObstructiveThirdPartyCode: true,
+    experimentalOriginDependencies: true, 
   },
 });
