@@ -16,6 +16,8 @@
 // Import commands.js using ES2015 syntax:
 import './commands'
 
+import 'cypress-mochawesome-reporter/register';
+
 Cypress.on('uncaught:exception', (err, runnable) => {
   // Prevent failing the test
   return false;
@@ -56,6 +58,7 @@ Cypress.on('uncaught:exception', (err, runnable) => {
       return false
     }
     // we still want to ensure there are no other unexpected
-    // errors, so we let them fail the test
+    // errors, so we let them
+    //  fail the test
   })
   

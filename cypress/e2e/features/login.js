@@ -20,7 +20,7 @@ Then('Click on the "Login with Paratext" on the login page', () => {
 
 
   cy.origin("https://dev-sillsdev.auth0.com", () => {
-    // const originElements=Cypress.require("../pageObject/originElements")
+    // const originElements=Cypress.require("../../pageObject/originElements")
     // const originObj = new originElements();
     // originObj.loginWithParatextBtnClick()
     cy.contains("Log in with paratext").click()
