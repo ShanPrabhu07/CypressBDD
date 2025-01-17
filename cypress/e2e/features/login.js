@@ -20,9 +20,11 @@ Then('Click on the "Login with Paratext" on the login page', () => {
 
 
   cy.origin("https://dev-sillsdev.auth0.com", () => {
-    // const originElements=Cypress.require("../../pageObject/originElements")
-    // const originObj = new originElements();
-    // originObj.loginWithParatextBtnClick()
+
+    const originElements=Cypress.require("../../pageObject/originElements")
+    const originObj = new originElements();
+    originObj.loginWithParatextBtnClick()
+
     cy.contains("Log in with paratext").click()
    
   });
@@ -31,7 +33,8 @@ Then('Click on the "Login with Paratext" on the login page', () => {
 
 When('Enter the Paratext admin credentials and click "Login"', () => {
 
-  cy.origin("https://registry.paratext.org", () => {
+    cy.origin("https://registry.paratext.org", () => {
+
     cy.wait(5000)
     cy.get("#email").clear()
     cy.get("#email").type("shanmuga.k@ecgroup-intl.com")
