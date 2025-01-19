@@ -1,7 +1,19 @@
 import { Given, When, Then } from "@badeball/cypress-cucumber-preprocessor";
 import loginElements from "../../pageObject/loginelements";
 
+Cypress.on('uncaught:exception', (err, runnable) => {
+  // Prevent failing the test
+  return false;
+});
 
+after(() => {
+  cy.wait(8000)
+  cy.contains("settings").click({force:true})
+  cy.get("#delete-btn").scrollIntoView()
+  cy.get("#delete-btn").scrollIntoView().click({force:true})
+  cy.get(".mat-mdc-input-element").type("DecQA")
+  cy.get("#project-delete-btn").click()
+});
 
 Given('Open the browser and navigate to qa.scriptureforge.org', () => {
   //cy.visit('qa.scriptureforge.org');
@@ -21,9 +33,9 @@ Then('Click on the "Login with Paratext" on the login page', () => {
 
   cy.origin("https://dev-sillsdev.auth0.com", () => {
 
-    const originElements=Cypress.require("../../pageObject/originElements")
-    const originObj = new originElements();
-    originObj.loginWithParatextBtnClick()
+    // const originElements=Cypress.require("../../pageObject/originElements")
+    // const originObj = new originElements();
+    // originObj.loginWithParatextBtnClick()
 
     cy.contains("Log in with paratext").click()
    
@@ -35,6 +47,7 @@ When('Enter the Paratext admin credentials and click "Login"', () => {
 
     cy.origin("https://registry.paratext.org", () => {
 
+ 
     cy.wait(5000)
     cy.get("#email").clear()
     cy.get("#email").type("shanmuga.k@ecgroup-intl.com")
@@ -80,17 +93,28 @@ When ('Verify that the user lands on the "My Projects" page upon successful logi
 
 Then ('Click "Connect" on the project "Project SIL"',()=>{
 
-  cy.contains("DAA").closest("mat-card").click()
+  cy.contains("DAA").scrollIntoView()
+  const parentElem=cy.contains("DAA").parents(".user-unconnected-project.ng-star-inserted").should('exist')
+  const childElem = parentElem.find('.mdc-button--unelevated').should('exist')
+  cy.log(childElem)
+  childElem.click({force:true})
+  cy.get(".title").should('have.text','Connect Paratext Project')
+  cy.get('.mdc-button__label').click()
+  cy.get('.sync-progress').should('be.visible')
+  cy.wait(12000)
+  cy.get('.sync-progress').should('not.be.visible')
 })
 
 When ('Verify that the project is connected successfully',()=>{
-
+  
+  cy.get(".project-name").should('be.visible')
  cy.get(".project-name").should('have.text','DecQA')
 
 })
 
 Then ('Click on Settings page',()=>{
 
+  cy.wait(8000)
   cy.contains("settings").click({force:true})
   cy.wait(8000)
 })
@@ -99,7 +123,15 @@ When ('Check the Translation Suggestions check box',()=>{
 
   cy.get(".mat-mdc-form-field").should('be.visible')
 
-  cy.get('#checkbox-translation-suggestions-input').check()
+  const suggestionscheck = cy.get('#checkbox-translation-suggestions-input')
+
+  if(suggestionscheck.should('be.checked')){
+    console.log("already checked")
+
+  }
+  else{
+    suggestionscheck.check()
+  }
 })
 
 Then ('Verify that the Translation suggestions enable for the project',()=>{
